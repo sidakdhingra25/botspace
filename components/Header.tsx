@@ -1,5 +1,5 @@
 import { Box, Container, Typography, Chip, Button } from "@mui/material"
-import { Analytics, PlayArrow, CheckCircle, RadioButtonUnchecked } from "@mui/icons-material"
+import { PlayArrow, CheckCircle, RadioButtonUnchecked } from "@mui/icons-material"
 
 interface HeaderProps {
   currentStep: number
@@ -66,22 +66,6 @@ export default function Header({ currentStep }: HeaderProps) {
             </Box>
           </Box>
           <Box sx={{ display: "flex", gap: 2 }}>
-            <Button
-              startIcon={<Analytics />}
-              variant="outlined"
-              sx={{
-                textTransform: "none",
-                borderColor: "#e5e7eb",
-                color: "#6b7280",
-                display: { xs: "none", sm: "flex" },
-                "&:hover": {
-                  backgroundColor: "#f9fafb",
-                  borderColor: "#d1d5db",
-                },
-              }}
-            >
-              Analytics
-            </Button>
             <Button
               startIcon={<PlayArrow />}
               variant="contained"

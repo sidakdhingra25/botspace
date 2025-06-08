@@ -148,7 +148,7 @@ export default function InstagramWorkflowBuilder() {
                       },
                     }}
                   >
-                    Save Workflow
+                    Save
                   </Button>
                 )}
               </Box>
