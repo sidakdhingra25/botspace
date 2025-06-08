@@ -1,103 +1,202 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { Box, Container, Grid, Paper, LinearProgress, Typography, Button, Divider, Chip } from "@mui/material"
+import { ArrowBack, ArrowForward } from "@mui/icons-material"
+
+import Header from "../components/Header"
+import Step1 from "../components/steps/Steps1"
+import Step2 from "../components/steps/Steps2"
+import Step3 from "../components/steps/Steps3"
+import InstagramPreview from "../components/InstagramPreview"
+import { useWorkflowState } from "../hooks/useWorkflowState"
+import { demoPosts } from "../data/demoPosts"
+
+export default function InstagramWorkflowBuilder() {
+  const { state, setState, handleNext, handleBack } = useWorkflowState()
+
+  const selectedPostData = demoPosts.find((post) => post.id === state.selectedPostId) || demoPosts[0]
+
+  // Don't render anything until client-side hydration is complete
+  if (!state.mounted) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          bgcolor: "#fafbfc",
+        }}
+      >
+        <Typography>Loading...</Typography>
+      </Box>
+    )
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <Box sx={{ bgcolor: "#fafbfc", minHeight: "100vh", maxHeight: "100vh", overflow: "hidden" }}>
+      <Header currentStep={state.currentStep} />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      <Container maxWidth="xl" sx={{ py: 2, height: "calc(100vh - 64px)", overflow: "hidden" }}>
+        <Grid container spacing={2} sx={{ height: "100%" }}>
+          {/* Main Content */}
+          <Grid  sx={{ height: "100%", overflow: "hidden" }}>
+            <Paper
+              sx={{
+                p: 3,
+                borderRadius: 4,
+                boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+                border: "1px solid #f3f4f6",
+                opacity: state.mounted ? 1 : 0,
+                transition: "opacity 0.5s ease",
+                height: "100%",
+                overflow: "auto",
+              }}
+            >
+              {/* Progress Bar */}
+              <Box sx={{ mb: 3 }}>
+                <LinearProgress
+                  variant="determinate"
+                  value={((state.currentStep + 1) / 3) * 100}
+                  sx={{
+                    height: 6,
+                    borderRadius: 3,
+                    bgcolor: "#f3f4f6",
+                    "& .MuiLinearProgress-bar": {
+                      bgcolor: "#6366f1",
+                      borderRadius: 3,
+                    },
+                  }}
+                />
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: "block" }}>
+                  Step {state.currentStep + 1} of 3 - {Math.round(((state.currentStep + 1) / 3) * 100)}% complete
+                </Typography>
+              </Box>
+
+              {state.currentStep === 0 && <Step1 state={state} setState={setState} demoPosts={demoPosts} />}
+              {state.currentStep === 1 && <Step2 state={state} setState={setState} demoPosts={demoPosts} />}
+              {state.currentStep === 2 && <Step3 state={state} setState={setState} demoPosts={demoPosts} />}
+
+              <Divider sx={{ my: 3 }} />
+
+              {/* Navigation */}
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <Button
+                  variant="outlined"
+                  onClick={handleBack}
+                  disabled={state.currentStep === 0}
+                  startIcon={<ArrowBack />}
+                  sx={{
+                    textTransform: "none",
+                    borderColor: "#e5e7eb",
+                    color: "#6b7280",
+                    "&:hover": {
+                      backgroundColor: "#f9fafb",
+                      borderColor: "#d1d5db",
+                    },
+                    "&:disabled": {
+                      opacity: 0.5,
+                    },
+                  }}
+                >
+                  Previous
+                </Button>
+
+                <Box sx={{ display: "flex", gap: 1 }}>
+                  {[0, 1, 2].map((step) => (
+                    <Box
+                      key={step}
+                      sx={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        bgcolor: state.currentStep >= step ? "#6366f1" : "#e5e7eb",
+                        transition: "all 0.3s ease",
+                      }}
+                    />
+                  ))}
+                </Box>
+
+                {state.currentStep < 2 ? (
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    endIcon={<ArrowForward />}
+                    sx={{
+                      textTransform: "none",
+                      bgcolor: "#6366f1",
+                      px: 3,
+                      py: 1,
+                      "&:hover": {
+                        bgcolor: "#5b21b6",
+                        transform: "translateY(-1px)",
+                        boxShadow: "0 4px 12px rgba(99, 102, 241, 0.3)",
+                      },
+                    }}
+                  >
+                    Continue
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      textTransform: "none",
+                      bgcolor: "#10b981",
+                      px: 3,
+                      py: 1,
+                      "&:hover": {
+                        bgcolor: "#059669",
+                        transform: "translateY(-1px)",
+                        boxShadow: "0 4px 12px rgba(16, 185, 129, 0.3)",
+                      },
+                    }}
+                  >
+                    Save Workflow
+                  </Button>
+                )}
+              </Box>
+            </Paper>
+          </Grid>
+
+          {/* Mobile Preview - Fixed Position */}
+          <Grid sx={{ height: "100%", overflow: "hidden" }}>
+            <Box
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                opacity: state.mounted ? 1 : 0,
+                transition: "opacity 0.5s ease",
+              }}
+            >
+              <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600, color: "#374151" }}>
+                Live Preview
+              </Typography>
+              <InstagramPreview state={state} setState={setState} selectedPostData={selectedPostData} />
+
+              {/* Preview Info */}
+              <Box sx={{ mt: 2, textAlign: "center", maxWidth: 280 }}>
+                <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
+                  <Chip
+                    label={`Post: ${selectedPostData.title}`}
+                    size="small"
+                    variant="outlined"
+                    sx={{ fontSize: "0.75rem" }}
+                  />
+                  <Chip
+                    label={`Keyword: ${state.commentKeyword}`}
+                    size="small"
+                    variant="outlined"
+                    sx={{ fontSize: "0.75rem" }}
+                  />
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  )
 }
