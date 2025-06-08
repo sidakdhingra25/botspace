@@ -29,18 +29,18 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
         transition: "opacity 0.3s ease",
       }}
     >
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 700, color: "#1a1a1a" }}>
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h5" sx={{ mb: 1, fontWeight: 700, color: "#1a1a1a" }}>
           Select Your Content
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
           Choose which posts or reels will trigger the automation
         </Typography>
       </Box>
 
-      <Stack spacing={2}>
+      <Stack spacing={3}>
         <Card variant="outlined" sx={{ borderRadius: 3, overflow: "hidden" }}>
-          <CardContent sx={{ p: 2 }}>
+          <CardContent sx={{ p: 3 }}>
             <FormControl component="fieldset" sx={{ width: "100%" }}>
               <RadioGroup
                 value={state.selectedPost}
@@ -58,7 +58,7 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                   }
                   label={
                     <Box>
-                      <Typography variant="body1" sx={{ fontWeight: 600, mb: 0.25 }}>
+                      <Typography variant="body1" sx={{ fontWeight: 600, mb: 0.5 }}>
                         Specific post or reel
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
@@ -66,17 +66,17 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                       </Typography>
                     </Box>
                   }
-                  sx={{ mb: 1, alignItems: "flex-start" }}
+                  sx={{ mb: 2, alignItems: "flex-start" }}
                 />
               </RadioGroup>
             </FormControl>
 
             {state.selectedPost === "specific" && (
-              <Box sx={{ mt: 2, pt: 2, borderTop: "1px solid #f3f4f6" }}>
-                <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
+              <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid #f3f4f6" }}>
+                <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                   Choose a post:
                 </Typography>
-                <Grid container spacing={1.5} sx={{ mb: 2 }}>
+                <Grid container spacing={2} sx={{ mb: 3 }}>
                   {(state.showAllPosts ? demoPosts : demoPosts.slice(0, 4)).map((post, index) => (
                     <Grid key={post.id}>
                       <Box
@@ -84,18 +84,18 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                         sx={{
                           position: "relative",
                           cursor: "pointer",
-                          borderRadius: 2,
+                          borderRadius: 3,
                           overflow: "hidden",
                           transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                           transform: state.selectedPostId === post.id ? "scale(1.02)" : "scale(1)",
-                          border: state.selectedPostId === post.id ? "2px solid #6366f1" : "2px solid transparent",
+                          border: state.selectedPostId === post.id ? "3px solid #6366f1" : "3px solid transparent",
                           boxShadow:
                             state.selectedPostId === post.id
-                              ? "0 6px 16px rgba(99, 102, 241, 0.2)"
-                              : "0 2px 8px rgba(0,0,0,0.06)",
+                              ? "0 10px 30px rgba(99, 102, 241, 0.3)"
+                              : "0 4px 12px rgba(0,0,0,0.08)",
                           "&:hover": {
                             transform: "scale(1.02)",
-                            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                            boxShadow: "0 8px 20px rgba(0,0,0,0.12)",
                           },
                           opacity: state.mounted ? 1 : 0,
                           animation: state.mounted ? `fadeIn 0.5s ease forwards ${index * 0.1}s` : "none",
@@ -117,23 +117,23 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                           alt={post.title}
                           sx={{
                             width: "100%",
-                            height: 80,
+                            height: 100,
                             objectFit: "cover",
                           }}
                         />
                         <Box
                           sx={{
                             position: "absolute",
-                            top: 4,
-                            right: 4,
+                            top: 6,
+                            right: 6,
                             bgcolor: "rgba(0,0,0,0.6)",
-                            borderRadius: 1,
-                            px: 0.5,
-                            py: 0.25,
-                            backdropFilter: "blur(4px)",
+                            borderRadius: 1.5,
+                            px: 1,
+                            py: 0.5,
+                            backdropFilter: "blur(8px)",
                           }}
                         >
-                          <FilterNone sx={{ color: "white", fontSize: 12 }} />
+                          <FilterNone sx={{ color: "white", fontSize: 14 }} />
                         </Box>
                         {state.selectedPostId === post.id && (
                           <Box
@@ -144,15 +144,15 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                               transform: "translate(-50%, -50%)",
                               bgcolor: "#6366f1",
                               borderRadius: "50%",
-                              width: 24,
-                              height: 24,
+                              width: 32,
+                              height: 32,
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              boxShadow: "0 2px 8px rgba(99, 102, 241, 0.4)",
+                              boxShadow: "0 4px 12px rgba(99, 102, 241, 0.4)",
                             }}
                           >
-                            <CheckCircle sx={{ color: "white", fontSize: 16 }} />
+                            <CheckCircle sx={{ color: "white", fontSize: 20 }} />
                           </Box>
                         )}
                       </Box>
@@ -166,8 +166,6 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                     textTransform: "none",
                     fontWeight: 600,
                     color: "#6366f1",
-                    fontSize: "0.875rem",
-                    py: 0.5,
                     "&:hover": { backgroundColor: "rgba(99, 102, 241, 0.04)" },
                   }}
                 >
@@ -179,7 +177,7 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
         </Card>
 
         <Card variant="outlined" sx={{ borderRadius: 3, opacity: 0.6 }}>
-          <CardContent sx={{ p: 2 }}>
+          <CardContent sx={{ p: 3 }}>
             <FormControl component="fieldset" sx={{ width: "100%" }}>
               <RadioGroup
                 value={state.selectedPost}
@@ -191,7 +189,7 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                   label={
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                       <Box>
-                        <Typography variant="body1" sx={{ fontWeight: 600, mb: 0.25 }}>
+                        <Typography variant="body1" sx={{ fontWeight: 600, mb: 0.5 }}>
                           Any post or reel
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -205,13 +203,12 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                           bgcolor: "#fbbf24",
                           color: "white",
                           fontWeight: 700,
-                          fontSize: "0.625rem",
-                          height: 20,
+                          fontSize: "0.75rem",
                         }}
                       />
                     </Box>
                   }
-                  sx={{ mb: 1, alignItems: "flex-start" }}
+                  sx={{ mb: 2, alignItems: "flex-start" }}
                 />
                 <FormControlLabel
                   value="next"
@@ -219,7 +216,7 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                   label={
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                       <Box>
-                        <Typography variant="body1" sx={{ fontWeight: 600, mb: 0.25 }}>
+                        <Typography variant="body1" sx={{ fontWeight: 600, mb: 0.5 }}>
                           Next post or reel
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -233,8 +230,7 @@ export default function Step1({ state, setState, demoPosts }: StepProps) {
                           bgcolor: "#fbbf24",
                           color: "white",
                           fontWeight: 700,
-                          fontSize: "0.625rem",
-                          height: 20,
+                          fontSize: "0.75rem",
                         }}
                       />
                     </Box>

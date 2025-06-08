@@ -1,6 +1,6 @@
 "use client"
 
-import { Box, Container, Grid, Paper, LinearProgress, Typography, Button, Divider, Chip } from "@mui/material"
+import { Box, Container, Grid, Paper, LinearProgress, Typography, Button, Divider } from "@mui/material"
 import { ArrowBack, ArrowForward } from "@mui/icons-material"
 
 import Header from "../components/Header"
@@ -16,7 +16,6 @@ export default function InstagramWorkflowBuilder() {
 
   const selectedPostData = demoPosts.find((post) => post.id === state.selectedPostId) || demoPosts[0]
 
-  // Don't render anything until client-side hydration is complete
   if (!state.mounted) {
     return (
       <Box
@@ -34,41 +33,39 @@ export default function InstagramWorkflowBuilder() {
   }
 
   return (
-    <Box sx={{ bgcolor: "#fafbfc", minHeight: "100vh", maxHeight: "100vh", overflow: "hidden" }}>
+    <Box sx={{ bgcolor: "#fafbfc", minHeight: "100vh" }}>
       <Header currentStep={state.currentStep} />
 
-      <Container maxWidth="xl" sx={{ py: 2, height: "calc(100vh - 64px)", overflow: "hidden" }}>
-        <Grid container spacing={2} sx={{ height: "100%" }}>
+      <Container maxWidth="xl" sx={{ py: { xs: 2, md: 4 } }}>
+        <Grid container spacing={{ xs: 3, md: 4 }}>
           {/* Main Content */}
-          <Grid  sx={{ height: "100%", overflow: "hidden" }}>
+          <Grid>
             <Paper
               sx={{
-                p: 3,
+                p: { xs: 2, sm: 3, md: 4 },
                 borderRadius: 4,
                 boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
                 border: "1px solid #f3f4f6",
                 opacity: state.mounted ? 1 : 0,
                 transition: "opacity 0.5s ease",
-                height: "100%",
-                overflow: "auto",
               }}
             >
               {/* Progress Bar */}
-              <Box sx={{ mb: 3 }}>
+              <Box sx={{ mb: 4 }}>
                 <LinearProgress
                   variant="determinate"
                   value={((state.currentStep + 1) / 3) * 100}
                   sx={{
-                    height: 6,
-                    borderRadius: 3,
+                    height: 8,
+                    borderRadius: 4,
                     bgcolor: "#f3f4f6",
                     "& .MuiLinearProgress-bar": {
                       bgcolor: "#6366f1",
-                      borderRadius: 3,
+                      borderRadius: 4,
                     },
                   }}
                 />
-                <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: "block" }}>
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: "block" }}>
                   Step {state.currentStep + 1} of 3 - {Math.round(((state.currentStep + 1) / 3) * 100)}% complete
                 </Typography>
               </Box>
@@ -77,7 +74,7 @@ export default function InstagramWorkflowBuilder() {
               {state.currentStep === 1 && <Step2 state={state} setState={setState} demoPosts={demoPosts} />}
               {state.currentStep === 2 && <Step3 state={state} setState={setState} demoPosts={demoPosts} />}
 
-              <Divider sx={{ my: 3 }} />
+              <Divider sx={{ my: 4 }} />
 
               {/* Navigation */}
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -126,7 +123,7 @@ export default function InstagramWorkflowBuilder() {
                       textTransform: "none",
                       bgcolor: "#6366f1",
                       px: 3,
-                      py: 1,
+                      py: 1.5,
                       "&:hover": {
                         bgcolor: "#5b21b6",
                         transform: "translateY(-1px)",
@@ -143,7 +140,7 @@ export default function InstagramWorkflowBuilder() {
                       textTransform: "none",
                       bgcolor: "#10b981",
                       px: 3,
-                      py: 1,
+                      py: 1.5,
                       "&:hover": {
                         bgcolor: "#059669",
                         transform: "translateY(-1px)",
@@ -158,41 +155,28 @@ export default function InstagramWorkflowBuilder() {
             </Paper>
           </Grid>
 
-          {/* Mobile Preview - Fixed Position */}
-          <Grid sx={{ height: "100%", overflow: "hidden" }}>
+          {/* Mobile Preview */}
+          <Grid>
             <Box
               sx={{
-                height: "100%",
+                position: { xs: "relative", md: "sticky" },
+                top: { md: 100 },
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: { xs: "flex-start", md: "center" },
                 opacity: state.mounted ? 1 : 0,
                 transition: "opacity 0.5s ease",
+                py: { xs: 2, md: 0 },
               }}
             >
-              <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600, color: "#374151" }}>
+              <Typography variant="h6" sx={{ mb: 3, fontWeight: 600, color: "#374151" }}>
                 Live Preview
               </Typography>
               <InstagramPreview state={state} setState={setState} selectedPostData={selectedPostData} />
 
               {/* Preview Info */}
-              <Box sx={{ mt: 2, textAlign: "center", maxWidth: 280 }}>
-                <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
-                  <Chip
-                    label={`Post: ${selectedPostData.title}`}
-                    size="small"
-                    variant="outlined"
-                    sx={{ fontSize: "0.75rem" }}
-                  />
-                  <Chip
-                    label={`Keyword: ${state.commentKeyword}`}
-                    size="small"
-                    variant="outlined"
-                    sx={{ fontSize: "0.75rem" }}
-                  />
-                </Box>
-              </Box>
+              
             </Box>
           </Grid>
         </Grid>

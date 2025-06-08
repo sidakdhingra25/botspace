@@ -11,61 +11,57 @@ export default function Header({ currentStep }: HeaderProps) {
       sx={{
         bgcolor: "white",
         borderBottom: "1px solid #e5e7eb",
-        py: 1.5,
+        py: 2,
         position: "sticky",
         top: 0,
         zIndex: 100,
-        height: "64px",
       }}
     >
       <Container maxWidth="xl">
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-            <Typography variant="h6" sx={{ fontWeight: 800, color: "#111827" }}>
+            <Typography variant="h5" sx={{ fontWeight: 800, color: "#111827" }}>
               Instagram Automation
             </Typography>
-            <Box sx={{ display: "flex", gap: 1 }}>
+            <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 1 }}>
               <Chip
                 icon={
                   currentStep >= 0 ? (
-                    <CheckCircle sx={{ fontSize: "14px !important" }} />
+                    <CheckCircle sx={{ fontSize: "16px !important" }} />
                   ) : (
-                    <RadioButtonUnchecked sx={{ fontSize: "14px !important" }} />
+                    <RadioButtonUnchecked sx={{ fontSize: "16px !important" }} />
                   )
                 }
                 label="Content"
                 color={currentStep >= 0 ? "success" : "default"}
                 variant={currentStep === 0 ? "filled" : "outlined"}
                 size="small"
-                sx={{ height: 24 }}
               />
               <Chip
                 icon={
                   currentStep >= 1 ? (
-                    <CheckCircle sx={{ fontSize: "14px !important" }} />
+                    <CheckCircle sx={{ fontSize: "16px !important" }} />
                   ) : (
-                    <RadioButtonUnchecked sx={{ fontSize: "14px !important" }} />
+                    <RadioButtonUnchecked sx={{ fontSize: "16px !important" }} />
                   )
                 }
                 label="Trigger"
                 color={currentStep >= 1 ? "success" : "default"}
                 variant={currentStep === 1 ? "filled" : "outlined"}
                 size="small"
-                sx={{ height: 24 }}
               />
               <Chip
                 icon={
                   currentStep >= 2 ? (
-                    <CheckCircle sx={{ fontSize: "14px !important" }} />
+                    <CheckCircle sx={{ fontSize: "16px !important" }} />
                   ) : (
-                    <RadioButtonUnchecked sx={{ fontSize: "14px !important" }} />
+                    <RadioButtonUnchecked sx={{ fontSize: "16px !important" }} />
                   )
                 }
                 label="Response"
                 color={currentStep >= 2 ? "success" : "default"}
                 variant={currentStep === 2 ? "filled" : "outlined"}
                 size="small"
-                sx={{ height: 24 }}
               />
             </Box>
           </Box>
@@ -73,11 +69,11 @@ export default function Header({ currentStep }: HeaderProps) {
             <Button
               startIcon={<Analytics />}
               variant="outlined"
-              size="small"
               sx={{
                 textTransform: "none",
                 borderColor: "#e5e7eb",
                 color: "#6b7280",
+                display: { xs: "none", sm: "flex" },
                 "&:hover": {
                   backgroundColor: "#f9fafb",
                   borderColor: "#d1d5db",
@@ -89,12 +85,13 @@ export default function Header({ currentStep }: HeaderProps) {
             <Button
               startIcon={<PlayArrow />}
               variant="contained"
-              size="small"
               sx={{
                 textTransform: "none",
                 bgcolor: "#10b981",
                 "&:hover": {
                   bgcolor: "#059669",
+                  transform: "translateY(-1px)",
+                  boxShadow: "0 4px 12px rgba(16, 185, 129, 0.3)",
                 },
               }}
             >

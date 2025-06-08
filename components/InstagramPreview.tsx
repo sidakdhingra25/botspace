@@ -32,28 +32,94 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
     return (
       <Box
         sx={{
-          width: 280,
-          height: 560,
+          width: 320,
+          height: 690,
           bgcolor: "#000",
-          borderRadius: 6,
+          borderRadius: 8,
           overflow: "hidden",
           position: "relative",
           opacity: state.isAnimating ? 0 : 1,
           transition: "opacity 0.3s ease",
+          boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
+          border: "8px solid #1a1a1a",
+          "&::before": {
+            content: '""',
+            position: "fixed",
+            top: -8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 120,
+            height: 30,
+            bgcolor: "#000",
+            borderRadius: "0 0 20px 20px",
+            zIndex: 10,
+          },
         }}
       >
-        {/* Status bar */}
+        {/* Dynamic Island */}
         <Box
           sx={{
-            height: 36,
+            position: "absolute",
+            top: 8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 120,
+            height: 30,
             bgcolor: "#000",
+            borderRadius: "20px",
+            zIndex: 20,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+          }}
+        >
+          <Box
+            sx={{
+              width: 8,
+              height: 8,
+              bgcolor: "#333",
+              borderRadius: "50%",
+              mr: 1,
+            }}
+          />
+          <Box
+            sx={{
+              width: 12,
+              height: 8,
+              bgcolor: "#333",
+              borderRadius: "4px",
+            }}
+          />
+        </Box>
+
+        {/* Status bar */}
+        <Box
+          sx={{
+            height: 50,
+            bgcolor: "#000",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            px: 3,
+            pt: 2,
             color: "white",
           }}
         >
-          <Typography variant="caption">9:41</Typography>
+          <Typography variant="caption" sx={{ fontWeight: 600 }}>
+            9:41
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <Box sx={{ display: "flex", gap: 0.5 }}>
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, ml: 1 }}>
+              <Box sx={{ width: 20, height: 12, border: "1px solid white", borderRadius: 2 }} />
+              <Typography variant="caption">100%</Typography>
+            </Box>
+          </Box>
         </Box>
 
         {/* Header */}
@@ -62,14 +128,16 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            px: 2,
-            py: 0.75,
+            px: 3,
+            py: 1,
             bgcolor: "#000",
             color: "white",
           }}
         >
-          <ArrowBack sx={{ fontSize: 18 }} />
-          <Typography variant="subtitle1">Posts</Typography>
+          <ArrowBack sx={{ fontSize: 20 }} />
+          <Typography variant="h6" sx={{ fontWeight: 600 }}>
+            Posts
+          </Typography>
           <Box />
         </Box>
 
@@ -78,21 +146,23 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
           sx={{
             display: "flex",
             alignItems: "center",
-            px: 2,
-            py: 0.75,
+            px: 3,
+            py: 1.5,
             bgcolor: "#000",
             color: "white",
           }}
         >
-          <Avatar sx={{ width: 28, height: 28, mr: 1 }}>{selectedPostData.username.charAt(0).toUpperCase()}</Avatar>
-          <Typography variant="body2">{selectedPostData.username}</Typography>
-          <MoreHoriz sx={{ ml: "auto", fontSize: 18 }} />
+          <Avatar sx={{ width: 32, height: 32, mr: 1.5 }}>{selectedPostData.username.charAt(0).toUpperCase()}</Avatar>
+          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+            {selectedPostData.username}
+          </Typography>
+          <MoreHoriz sx={{ ml: "auto", fontSize: 20 }} />
         </Box>
 
         {/* Post image */}
         <Box
           sx={{
-            height: 280,
+            height: 320,
             width: "100%",
             backgroundImage: `url(${selectedPostData.image})`,
             backgroundSize: "cover",
@@ -107,13 +177,13 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            px: 2,
-            py: 0.75,
+            px: 3,
+            py: 1.5,
             bgcolor: "#000",
             color: "white",
           }}
         >
-          <Box sx={{ display: "flex", gap: 1.5 }}>
+          <Box sx={{ display: "flex", gap: 2 }}>
             <IconButton
               onClick={() => setState((prev) => ({ ...prev, liked: !prev.liked }))}
               sx={{
@@ -122,13 +192,13 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
                 p: 0.5,
               }}
             >
-              {state.liked ? <Favorite sx={{ fontSize: 18 }} /> : <FavoriteBorder sx={{ fontSize: 18 }} />}
+              {state.liked ? <Favorite sx={{ fontSize: 20 }} /> : <FavoriteBorder sx={{ fontSize: 20 }} />}
             </IconButton>
             <IconButton sx={{ color: "white", p: 0.5 }}>
-              <ChatBubbleOutline sx={{ fontSize: 18 }} />
+              <ChatBubbleOutline sx={{ fontSize: 20 }} />
             </IconButton>
             <IconButton sx={{ color: "white", p: 0.5 }}>
-              <Send sx={{ fontSize: 18 }} />
+              <Send sx={{ fontSize: 20 }} />
             </IconButton>
           </Box>
           <IconButton
@@ -139,19 +209,34 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
               p: 0.5,
             }}
           >
-            {state.bookmarked ? <Bookmark sx={{ fontSize: 18 }} /> : <BookmarkBorder sx={{ fontSize: 18 }} />}
+            {state.bookmarked ? <Bookmark sx={{ fontSize: 20 }} /> : <BookmarkBorder sx={{ fontSize: 20 }} />}
           </IconButton>
         </Box>
 
         {/* Likes and caption */}
-        <Box sx={{ px: 2, py: 0.75, bgcolor: "#000", color: "white" }}>
+        <Box sx={{ px: 3, py: 1.5, bgcolor: "#000", color: "white" }}>
           <Typography variant="body2" sx={{ fontWeight: "bold", mb: 0.5 }}>
             {state.liked ? selectedPostData.likes + 1 : selectedPostData.likes} likes
           </Typography>
-          <Typography variant="caption">
+          <Typography variant="body2">
             <strong>{selectedPostData.username}</strong> {selectedPostData.caption}
           </Typography>
         </Box>
+
+        {/* Home indicator */}
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 134,
+            height: 5,
+            bgcolor: "white",
+            borderRadius: "3px",
+            opacity: 0.6,
+          }}
+        />
       </Box>
     )
   }
@@ -160,29 +245,94 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
     return (
       <Box
         sx={{
-          width: 280,
-          height: 560,
+          width: 320,
+          height: 690,
           bgcolor: "#000",
-          borderRadius: 6,
+          borderRadius: 8,
           overflow: "hidden",
           position: "relative",
           opacity: state.isAnimating ? 0 : 1,
           transition: "opacity 0.3s ease",
-          // boxShadow removed
+          boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
+          border: "8px solid #1a1a1a",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: -8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 120,
+            height: 30,
+            bgcolor: "#000",
+            borderRadius: "0 0 20px 20px",
+            zIndex: 10,
+          },
         }}
       >
-        {/* Status bar */}
+        {/* Dynamic Island */}
         <Box
           sx={{
-            height: 36,
+            position: "absolute",
+            top: 8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 120,
+            height: 30,
             bgcolor: "#000",
+            borderRadius: "20px",
+            zIndex: 20,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+          }}
+        >
+          <Box
+            sx={{
+              width: 8,
+              height: 8,
+              bgcolor: "#333",
+              borderRadius: "50%",
+              mr: 1,
+            }}
+          />
+          <Box
+            sx={{
+              width: 12,
+              height: 8,
+              bgcolor: "#333",
+              borderRadius: "4px",
+            }}
+          />
+        </Box>
+
+        {/* Status bar */}
+        <Box
+          sx={{
+            height: 50,
+            bgcolor: "#000",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            px: 3,
+            pt: 2,
             color: "white",
           }}
         >
-          <Typography variant="caption">9:41</Typography>
+          <Typography variant="caption" sx={{ fontWeight: 600 }}>
+            9:41
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <Box sx={{ display: "flex", gap: 0.5 }}>
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, ml: 1 }}>
+              <Box sx={{ width: 20, height: 12, border: "1px solid white", borderRadius: 2 }} />
+              <Typography variant="caption">100%</Typography>
+            </Box>
+          </Box>
         </Box>
 
         {/* Header */}
@@ -191,14 +341,16 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            px: 2,
-            py: 0.75,
+            px: 3,
+            py: 1,
             bgcolor: "#000",
             color: "white",
           }}
         >
-          <ArrowBack sx={{ fontSize: 18 }} />
-          <Typography variant="subtitle1">Posts</Typography>
+          <ArrowBack sx={{ fontSize: 20 }} />
+          <Typography variant="h6" sx={{ fontWeight: 600 }}>
+            Posts
+          </Typography>
           <Box />
         </Box>
 
@@ -207,21 +359,23 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
           sx={{
             display: "flex",
             alignItems: "center",
-            px: 2,
-            py: 0.75,
+            px: 3,
+            py: 1.5,
             bgcolor: "#000",
             color: "white",
           }}
         >
-          <Avatar sx={{ width: 28, height: 28, mr: 1 }}>{selectedPostData.username.charAt(0).toUpperCase()}</Avatar>
-          <Typography variant="body2">{selectedPostData.username}</Typography>
-          <MoreHoriz sx={{ ml: "auto", fontSize: 18 }} />
+          <Avatar sx={{ width: 32, height: 32, mr: 1.5 }}>{selectedPostData.username.charAt(0).toUpperCase()}</Avatar>
+          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+            {selectedPostData.username}
+          </Typography>
+          <MoreHoriz sx={{ ml: "auto", fontSize: 20 }} />
         </Box>
 
         {/* Post image - SAME SIZE as step 1 */}
         <Box
           sx={{
-            height: 280,
+            height: 320,
             width: "100%",
             backgroundImage: `url(${selectedPostData.image})`,
             backgroundSize: "cover",
@@ -236,13 +390,13 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            px: 2,
-            py: 0.75,
+            px: 3,
+            py: 1.5,
             bgcolor: "#000",
             color: "white",
           }}
         >
-          <Box sx={{ display: "flex", gap: 1.5 }}>
+          <Box sx={{ display: "flex", gap: 2 }}>
             <IconButton
               onClick={() => setState((prev) => ({ ...prev, liked: !prev.liked }))}
               sx={{
@@ -251,13 +405,13 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
                 p: 0.5,
               }}
             >
-              {state.liked ? <Favorite sx={{ fontSize: 18 }} /> : <FavoriteBorder sx={{ fontSize: 18 }} />}
+              {state.liked ? <Favorite sx={{ fontSize: 20 }} /> : <FavoriteBorder sx={{ fontSize: 20 }} />}
             </IconButton>
             <IconButton sx={{ color: "white", p: 0.5 }}>
-              <ChatBubbleOutline sx={{ fontSize: 18 }} />
+              <ChatBubbleOutline sx={{ fontSize: 20 }} />
             </IconButton>
             <IconButton sx={{ color: "white", p: 0.5 }}>
-              <Send sx={{ fontSize: 18 }} />
+              <Send sx={{ fontSize: 20 }} />
             </IconButton>
           </Box>
           <IconButton
@@ -268,12 +422,12 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
               p: 0.5,
             }}
           >
-            {state.bookmarked ? <Bookmark sx={{ fontSize: 18 }} /> : <BookmarkBorder sx={{ fontSize: 18 }} />}
+            {state.bookmarked ? <Bookmark sx={{ fontSize: 20 }} /> : <BookmarkBorder sx={{ fontSize: 20 }} />}
           </IconButton>
         </Box>
 
         {/* Likes count */}
-        <Box sx={{ px: 2, py: 0.75, bgcolor: "#000", color: "white" }}>
+        <Box sx={{ px: 3, py: 1.5, bgcolor: "#000", color: "white" }}>
           <Typography variant="body2" sx={{ fontWeight: "bold" }}>
             {state.liked ? selectedPostData.likes + 1 : selectedPostData.likes} likes
           </Typography>
@@ -302,13 +456,13 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
             sx={{
               display: "flex",
               justifyContent: "center",
-              py: 0.75,
+              py: 1,
               borderBottom: "1px solid #333",
             }}
           >
             <Box
               sx={{
-                width: 36,
+                width: 40,
                 height: 4,
                 bgcolor: "#666",
                 borderRadius: 2,
@@ -322,29 +476,39 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              py: 1,
+              py: 2,
               borderBottom: "1px solid #333",
             }}
           >
-            <Typography variant="subtitle1" sx={{ color: "white", fontWeight: 600 }}>
+            <Typography variant="h6" sx={{ color: "white", fontWeight: 600 }}>
               Comments
             </Typography>
           </Box>
 
           {/* Comments list */}
-          <Box sx={{ flex: 1, overflowY: "auto", px: 2, py: 0.5 }}>
+          <Box
+            sx={{
+              flex: 1,
+              overflowY: "auto",
+              px: 3,
+              py: 1,
+              scrollbarWidth: "none", // Firefox
+              "&::-webkit-scrollbar": { display: "none" }, // Chrome, Safari, Edge
+              msOverflowStyle: "none", // IE and Edge
+            }}
+          >
             {/* Sample comment with trigger keyword */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "flex-start",
-                py: 1.5,
+                py: 2,
                 color: "white",
               }}
             >
-              <Avatar sx={{ width: 28, height: 28, mr: 1.5 }}>U</Avatar>
+              <Avatar sx={{ width: 32, height: 32, mr: 2 }}>U</Avatar>
               <Box sx={{ flex: 1 }}>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.25 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
                   <Typography variant="body2" sx={{ fontWeight: "bold" }}>
                     username
                   </Typography>
@@ -352,7 +516,7 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
                     2m
                   </Typography>
                 </Box>
-                <Typography variant="body2" sx={{ mb: 0.5 }}>
+                <Typography variant="body2" sx={{ mb: 1 }}>
                   {state.commentKeyword}
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -373,10 +537,10 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
                 sx={{
                   color: state.commentLiked ? "#ff3040" : "white",
                   transition: "all 0.2s ease",
-                  p: 0.25,
+                  p: 0.5,
                 }}
               >
-                {state.commentLiked ? <Favorite sx={{ fontSize: 16 }} /> : <FavoriteBorder sx={{ fontSize: 16 }} />}
+                {state.commentLiked ? <Favorite sx={{ fontSize: 18 }} /> : <FavoriteBorder sx={{ fontSize: 18 }} />}
               </IconButton>
             </Box>
           </Box>
@@ -386,8 +550,8 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
             sx={{
               display: "flex",
               justifyContent: "center",
-              gap: 1.5,
-              py: 1,
+              gap: 2,
+              py: 1.5,
               borderTop: "1px solid #333",
               borderBottom: "1px solid #333",
             }}
@@ -396,7 +560,7 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
               <Box
                 key={index}
                 sx={{
-                  fontSize: "18px",
+                  fontSize: "20px",
                   cursor: "pointer",
                   transition: "transform 0.2s ease",
                   opacity: 0.8,
@@ -413,35 +577,35 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
             sx={{
               display: "flex",
               alignItems: "center",
-              px: 2,
-              py: 1,
+              px: 3,
+              py: 1.5,
               borderTop: "1px solid #333",
             }}
           >
-            <Avatar sx={{ width: 24, height: 24, mr: 1 }}>Y</Avatar>
+            <Avatar sx={{ width: 28, height: 28, mr: 1.5 }}>Y</Avatar>
             <Box
               sx={{
                 flex: 1,
                 bgcolor: "#222",
                 borderRadius: 5,
-                px: 1.5,
-                py: 1,
+                px: 2,
+                py: 1.5,
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
                 border: "1px solid #333",
               }}
             >
-              <Typography variant="caption" color="grey.400" sx={{ flex: 1 }}>
-                Add a comment...
+              <Typography variant="body2" color="grey.400" sx={{ flex: 1 }}>
+                Add a comment for {selectedPostData.username}...
               </Typography>
-              <EmojiEmotions sx={{ fontSize: 16, color: "grey.400" }} />
+              <EmojiEmotions sx={{ fontSize: 18, color: "grey.400" }} />
             </Box>
             <Typography
-              variant="caption"
+              variant="body2"
               sx={{
                 color: "#0095f6",
-                ml: 1,
+                ml: 1.5,
                 cursor: "pointer",
                 fontWeight: 600,
                 "&:hover": { opacity: 0.7 },
@@ -451,6 +615,21 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
             </Typography>
           </Box>
         </Box>
+
+        {/* Home indicator */}
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 134,
+            height: 5,
+            bgcolor: "white",
+            borderRadius: "3px",
+            opacity: 0.6,
+          }}
+        />
       </Box>
     )
   }
@@ -459,39 +638,93 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
     return (
       <Box
         sx={{
-          width: 280,
-          height: 560,
+          width: 320,
+          height: 690,
           bgcolor: "#000",
-          borderRadius: 6,
+          borderRadius: 8,
           overflow: "hidden",
           position: "relative",
           opacity: state.isAnimating ? 0 : 1,
           transition: "opacity 0.3s ease",
-          // boxShadow removed
+          boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
+          border: "8px solid #1a1a1a",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: -8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 120,
+            height: 30,
+            bgcolor: "#000",
+            borderRadius: "0 0 20px 20px",
+            zIndex: 10,
+          },
         }}
       >
+        {/* Dynamic Island */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: 8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 120,
+            height: 30,
+            bgcolor: "#000",
+            borderRadius: "20px",
+            zIndex: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Box
+            sx={{
+              width: 8,
+              height: 8,
+              bgcolor: "#333",
+              borderRadius: "50%",
+              mr: 1,
+            }}
+          />
+          <Box
+            sx={{
+              width: 12,
+              height: 8,
+              bgcolor: "#333",
+              borderRadius: "4px",
+            }}
+          />
+        </Box>
+
         {/* Status bar */}
         <Box
           sx={{
-            height: 36,
+            height: 50,
             bgcolor: "#000",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            px: 2,
+            px: 3,
+            pt: 2,
             color: "white",
           }}
         >
-          <Typography variant="caption">1:37</Typography>
-          <Box sx={{ display: "flex", gap: 0.5 }}>
-            <Box sx={{ width: 3, height: 3, bgcolor: "white", borderRadius: "50%" }} />
-            <Box sx={{ width: 3, height: 3, bgcolor: "white", borderRadius: "50%" }} />
-            <Box sx={{ width: 3, height: 3, bgcolor: "white", borderRadius: "50%" }} />
-            <Box sx={{ width: 3, height: 3, bgcolor: "white", borderRadius: "50%" }} />
-          </Box>
+          <Typography variant="caption" sx={{ fontWeight: 600 }}>
+            1:37
+          </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-            <Box sx={{ width: 16, height: 8, border: "1px solid white", borderRadius: 1 }} />
-            <Typography variant="caption">100%</Typography>
+            <Box sx={{ display: "flex", gap: 0.5 }}>
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+              <Box sx={{ width: 4, height: 4, bgcolor: "white", borderRadius: "50%" }} />
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, ml: 1 }}>
+              <Box sx={{ width: 20, height: 12, border: "1px solid white", borderRadius: 2 }} />
+              <Typography variant="caption">100%</Typography>
+            </Box>
           </Box>
         </Box>
 
@@ -501,36 +734,38 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            px: 2,
-            py: 0.75,
+            px: 3,
+            py: 1,
             bgcolor: "#000",
             color: "white",
           }}
         >
-          <ArrowBack sx={{ fontSize: 18 }} />
+          <ArrowBack sx={{ fontSize: 20 }} />
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Avatar sx={{ width: 24, height: 24 }}>{selectedPostData.username.charAt(0).toUpperCase()}</Avatar>
-            <Typography variant="body2">{selectedPostData.username}</Typography>
+            <Avatar sx={{ width: 28, height: 28 }}>{selectedPostData.username.charAt(0).toUpperCase()}</Avatar>
+            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+              {selectedPostData.username}
+            </Typography>
           </Box>
           <Box sx={{ display: "flex", gap: 1 }}>
-            <Phone sx={{ fontSize: 18 }} />
-            <VideoCall sx={{ fontSize: 18 }} />
+            <Phone sx={{ fontSize: 20 }} />
+            <VideoCall sx={{ fontSize: 20 }} />
           </Box>
         </Box>
 
         {/* Messages */}
-        <Box sx={{ flex: 1, px: 2, py: 1.5, bgcolor: "#000", height: 400, overflowY: "auto" }}>
+        <Box sx={{ flex: 1, px: 3, py: 2, bgcolor: "#000", height: 480, overflowY: "auto" }}>
           {/* Received message (bot message) */}
           {state.dmEnabled && state.dmMessage && (
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ mb: 3 }}>
               <Box
                 sx={{
                   bgcolor: "#333",
                   color: "white",
-                  p: 1.5,
+                  p: 2,
                   borderRadius: 3,
                   maxWidth: "80%",
-                  fontSize: "13px",
+                  fontSize: "14px",
                   lineHeight: 1.4,
                   whiteSpace: "pre-line",
                 }}
@@ -542,12 +777,12 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
 
           {/* Button message */}
           {state.dmEnabled && (
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ mb: 3 }}>
               <Box
                 sx={{
                   bgcolor: "#333",
                   color: "white",
-                  p: 1,
+                  p: 1.5,
                   borderRadius: 3,
                   maxWidth: "80%",
                   textAlign: "center",
@@ -559,9 +794,11 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
                   size="small"
                   sx={{
                     textTransform: "none",
-                    fontSize: "12px",
-                    py: 0.5,
-                    px: 1,
+                    fontSize: "13px",
+                    py: 1,
+                    px: 2,
+                    transition: "all 0.2s ease",
+                    "&:hover": { transform: "scale(1.05)" },
                   }}
                 >
                   Send me the link
@@ -571,15 +808,15 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
           )}
 
           {/* User's response (sent message) */}
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
             <Box
               sx={{
                 bgcolor: "#0084ff",
                 color: "white",
-                p: 1.5,
+                p: 2,
                 borderRadius: 3,
                 maxWidth: "80%",
-                fontSize: "13px",
+                fontSize: "14px",
               }}
             >
               Send me the link
@@ -588,15 +825,15 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
 
           {/* Bot's link message */}
           {state.linkMessage && (
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ mb: 3 }}>
               <Box
                 sx={{
                   bgcolor: "#333",
                   color: "white",
-                  p: 1.5,
+                  p: 2,
                   borderRadius: 3,
                   maxWidth: "80%",
-                  fontSize: "13px",
+                  fontSize: "14px",
                   whiteSpace: "pre-line",
                 }}
               >
@@ -611,33 +848,48 @@ export default function InstagramPreview({ state, setState, selectedPostData }: 
           sx={{
             display: "flex",
             alignItems: "center",
-            px: 2,
-            py: 1,
+            px: 3,
+            py: 1.5,
             bgcolor: "#000",
             borderTop: "1px solid #333",
           }}
         >
-          <Avatar sx={{ width: 24, height: 24, mr: 1 }}>{selectedPostData.username.charAt(0).toUpperCase()}</Avatar>
+          <Avatar sx={{ width: 28, height: 28, mr: 1.5 }}>{selectedPostData.username.charAt(0).toUpperCase()}</Avatar>
           <Box
             sx={{
               flex: 1,
               bgcolor: "#333",
               borderRadius: 5,
-              px: 1.5,
-              py: 1,
+              px: 2,
+              py: 1.5,
               display: "flex",
               alignItems: "center",
               gap: 1,
             }}
           >
-            <Typography variant="caption" color="grey.400" sx={{ flex: 1 }}>
+            <Typography variant="body2" color="grey.400" sx={{ flex: 1 }}>
               Message...
             </Typography>
-            <CameraAlt sx={{ fontSize: 14, color: "grey.400" }} />
-            <Mic sx={{ fontSize: 14, color: "grey.400" }} />
-            <EmojiEmotions sx={{ fontSize: 14, color: "grey.400" }} />
+            <CameraAlt sx={{ fontSize: 16, color: "grey.400" }} />
+            <Mic sx={{ fontSize: 16, color: "grey.400" }} />
+            <EmojiEmotions sx={{ fontSize: 16, color: "grey.400" }} />
           </Box>
         </Box>
+
+        {/* Home indicator */}
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 134,
+            height: 5,
+            bgcolor: "white",
+            borderRadius: "3px",
+            opacity: 0.6,
+          }}
+        />
       </Box>
     )
   }
