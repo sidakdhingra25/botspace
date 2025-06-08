@@ -32,7 +32,7 @@ export default function Header({ currentStep }: HeaderProps) {
                     <RadioButtonUnchecked sx={{ fontSize: "16px !important" }} />
                   )
                 }
-                label="Content"
+                label="Post"
                 color={currentStep >= 0 ? "success" : "default"}
                 variant={currentStep === 0 ? "filled" : "outlined"}
                 size="small"
@@ -45,7 +45,7 @@ export default function Header({ currentStep }: HeaderProps) {
                     <RadioButtonUnchecked sx={{ fontSize: "16px !important" }} />
                   )
                 }
-                label="Trigger"
+                label="Comment"
                 color={currentStep >= 1 ? "success" : "default"}
                 variant={currentStep === 1 ? "filled" : "outlined"}
                 size="small"
@@ -58,7 +58,7 @@ export default function Header({ currentStep }: HeaderProps) {
                     <RadioButtonUnchecked sx={{ fontSize: "16px !important" }} />
                   )
                 }
-                label="Response"
+                label="DM"
                 color={currentStep >= 2 ? "success" : "default"}
                 variant={currentStep === 2 ? "filled" : "outlined"}
                 size="small"
